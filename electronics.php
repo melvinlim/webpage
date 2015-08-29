@@ -5,10 +5,10 @@
 	echo '<table>';
 	echo '<td width="75%">';
 	require('electronics.html');
-	echo '</th>';
-	echo '<th width="25%">';
+	echo '</td>';
+	echo '<td valign="top" width="25%">';
 	require('subnav-electronics.html');
-	echo '</th>';
+	echo '</td>';
 	echo '</table>';
 ?>
 </body>
