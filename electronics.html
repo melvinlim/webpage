@@ -1,0 +1,50 @@
+<html>
+<head>
+</head>
+<body style="background-color:black" style="color:white">
+<p style="color:white">
+<h1 style="color:white">Melvin Lim</h1>
+</p>
+<hr>
+<table bgcolor="#666666" style="width:100%">
+<tr>
+	<td><a href="index.html"><h2>Index</a></h2></td>
+	<td><a href="gardening.html"><h2>Gardening</a></h2></td>
+	<td><a href="electronics.html"><h2>Electronics</a></h2></td>
+	<td><a href="3.html"><h2>3</a></h2></td>
+	<td><a href="4.html"><h2>4</a></h2></td>
+</tr>
+<hr>
+</table>
+<p style="color:white">
+I had some free time so I decided to learn how to use the AVR microcontrollers.
+</p>
+<p style="color:white">
+I purchased an atmega328p microcontroller.
+</p>
+<p style="color:white">
+First I stripped a parallel port cable then I labelled every single wire through trial and error using inb outb commands on linux.
+</p>
+<p style="color:white">
+Eventually I connected the wires to the AVR and used the avrdude program to try and program it.
+</p>
+<p style="color:white">
+Anyway it failed.  So I gave up for a few weeks.
+</p>
+<p style="color:white">
+Later when I tried again I purchased a usbasp programmer.  I again hooked it up and tried to program it and failed.
+</p>
+<p style="color:white">
+Next I remembered I had a Raspberry PI computer lying around.  Raspberry PI has a bunch of pins that you can use to send output and someone wrote a guide how to do that also avrdude supports this only you have to edit the avrdude.conf file to specify the particular ports you are using.
+</p>
+<p style="color:white">
+Anyway it didn't work but in the end I realized I needed a crystal since the AVR chip had been modified to use a crystal for some reason.
+</p>
+<p style="color:white">
+So the moral of the story is to connect a crystal to the AVR before programming it if you are doing this without an Arduino.
+</p>
+<p style="color:white">
+</p>
+</body>
+</html>
+
