@@ -3,7 +3,7 @@
 <?php
 	require('nav.html');
 	echo '<table>';
-	echo '<th width="75%">';
+	echo '<td width="75%">';
 	require('electronics.html');
 	echo '</th>';
 	echo '<th width="25%">';

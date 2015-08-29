@@ -20,6 +20,8 @@ handlers:
   script: gardening.php
 - url: /electronics.php
   script: electronics.php
+- url: /img
+  static_dir: img
 - url: /(.*\.html)
   static_files: static/\l
   upload: static/(.*\.html)
