@@ -2,13 +2,24 @@
 <h1 style="color:white">Melvin Lim</h1>
 </p>
 <hr>
-<table bgcolor="#666666" style="width:100%">
+<table bgcolor="#555555" style="width:100%">
 <tr>
-	<td><a href="index.php"><h2>Index</a></h2></td>
-	<td><a href="gardening.php"><h2>Gardening</a></h2></td>
-	<td><a href="electronics.php"><h2>Electronics</a></h2></td>
-	<td><a href="3.php"><h2>3</a></h2></td>
-	<td><a href="4.php"><h2>4</a></h2></td>
+	<td id='index.php' onclick="goto(this)" onmouseover="highlight(this)" onmouseout="normal(this)"><a href="index.php"><h2>Index</a></h2></td>
+	<td id='gardening.php' onclick="goto(this)" onmouseover="highlight(this)" onmouseout="normal(this)"><a href="gardening.php"><h2>Gardening</a></h2></td>
+	<td id='electronics.php' onclick="goto(this)" onmouseover="highlight(this)" onmouseout="normal(this)"><a href="electronics.php"><h2>Electronics</a></h2></td>
+	<td id='3.php' onclick="goto(this)" onmouseover="highlight(this)" onmouseout="normal(this)"><a href="3.php"><h2>3</a></h2></td>
+	<td id='4.php' onclick="goto(this)" onmouseover="highlight(this)" onmouseout="normal(this)"><a href="4.php"><h2>4</a></h2></td>
 </tr>
-<hr>
+<script>
+function goto(x){
+	window.location.href=x.id;
+}
+function highlight(x){
+	x.style.backgroundColor="red";
+}
+function normal(x){
+	x.style.backgroundColor="#555555";
+}
+</script>
 </table>
+<hr>
