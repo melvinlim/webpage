@@ -1,12 +1,14 @@
 <table bgcolor="#555555" style="width:100%">
-<tr>
 <?php
-$pages=array("page1","1234","pg3");
+$pages=array(
+	array('name'=>'pg1name','url'=>"page1"),
+	array('name'=>'pg2name','url'=>"page2"),
+	array('name'=>'pg3name','url'=>"page3"),
+);
 foreach ($pages as $value){
-	echo '<th height="25%" bgcolor="#aaaaaa" id="'.$value.'.php" onclick="subgoto(this)" onmouseover="subhighlight(this)" onmouseout="subnormal(this)"><a href="'.$value.'.php"><h3>'.ucfirst($value).'</a></h3></th>';
+	echo '<tr><th bgcolor="#aaaaaa" id="'.$value["url"].'.php" onclick="subgoto(this)" onmouseover="subhighlight(this)" onmouseout="subnormal(this)"><a href="'.$value["url"].'.php"><h3>'.ucfirst($value["name"]).'</a></h3></th></tr>';
 }
 ?>
-</tr>
 <script>
 function subgoto(x){
 	window.location.href=x.id;

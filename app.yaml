@@ -14,6 +14,8 @@ handlers:
   script: index.php
 - url: /index\.php
   script: index.php
+- url: /linux.php
+  script: linux.php
 - url: /gardening.php
   script: gardening.php
 - url: /electronics.php
