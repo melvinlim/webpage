@@ -1,9 +1,9 @@
-<table bgcolor="#aaaaaa" style="width:100%">
+<table bgcolor="#555555" style="width:100%">
 <tr>
 <?php
 $pages=array("page1","1234","pg3");
 foreach ($pages as $value){
-	echo '<td id="'.$value.'.html" onclick="subgoto(this)" onmouseover="subhighlight(this)" onmouseout="subnormal(this)"><a href="'.$value.'.php"><h3>'.$value.'</a></h3></td>';
+	echo '<th height="25%" bgcolor="#aaaaaa" id="'.$value.'.php" onclick="subgoto(this)" onmouseover="subhighlight(this)" onmouseout="subnormal(this)"><a href="'.$value.'.php"><h3>'.ucfirst($value).'</a></h3></th>';
 }
 ?>
 </tr>
