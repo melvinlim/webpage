@@ -8,6 +8,16 @@ handlers:
 - url: /favicon\.ico
   static_files: favicon.ico
   upload: favicon\.ico
-
-- url: .*
-  script: main.php
+- url: /
+  script: index.php
+- url: /index\.html
+  script: index.php
+- url: /index\.php
+  script: index.php
+- url: /gardening.php
+  script: gardening.php
+- url: /electronics.php
+  script: electronics.php
+- url: /(.*\.html)
+  static_files: static/\l
+  upload: static/(.*\.html)
