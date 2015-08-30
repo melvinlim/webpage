@@ -14,14 +14,10 @@ handlers:
   script: index.php
 - url: /index\.php
   script: index.php
-- url: /linux.php
-  script: linux.php
-- url: /gardening.php
-  script: gardening.php
-- url: /electronics.php
-  script: electronics.php
+- url: /(.*\.php)
+  script: \1
 - url: /img
   static_dir: img
 - url: /(.*\.html)
-  static_files: static/\l
+  static_files: static/\1
   upload: static/(.*\.html)

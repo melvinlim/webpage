@@ -1,0 +1,65 @@
+<p style="color:white">
+<hr>
+<table>
+<td>
+<a href="img/usbasp_avr.jpg"><img src="img/usbasp_avr.png" alt="usbasp and avr image"></a>
+</td>
+<td valign="top">
+<p style="color:white">
+I first had to identify the pins on the usbasp.  I found a pin diagram from the internet.  The usbasp provides 5 volts of power on one of its pins, and has four GND pins.  Using this and a voltmeter I was able to find the direction of the connector.  (It might have been rotated 180 degrees)
+</p>
+<p style="color:white">
+Next, 6 wires had to be connected from the usbasp to pins on the AVR.<br>
+</p>
+<p style="color:white">
+MOSI<->MOSI<br>
+MISO<->MISO<br>
+SCK<->SCK<br>
+RST<->RST<br>
+GND<->GND<br>
+VCC<->VCC<br>
+</p>
+</td>
+</table>
+<br>
+<table>
+<tr>
+<p style="color:white">
+Finally, I ran the avrdude program specifying usbasp as the programmer and atmega328p as the target.  (I was programming an atmega328p)<br>
+</p>
+<p style="color:white">
+For a list of programmers and targets, type avrdude -c? or avrdude -p?.<br>
+</p>
+<p style="color:white">
+<textarea rows="1" cols="50" readonly>
+avrdude -c usbasp -p m328p -vvv
+</textarea><br>
+</p>
+<p style="color:white">
+The -vvv option tells avrdude that I want a more descriptive output in case of errors.<br>
+note: avrdude has to be run as root or with the sudo command by someone who has been added to the sudoers file.<br>
+</p>
+<p style="color:white">
+Running the above command will read the fuses and such and should say something about the AVR device being initialized and ready for instructions if that is the case.<br>
+</p>
+<p style="color:white">
+Then I found a program to toggle a pin every 1 second and modified it to toggle all of the pins of a port.<br>
+</p>
+<p style="color:white">
+I used avr-gcc to compile the program and avr-objcopy to convert the elf file into an intel hex file.<br>
+</p>
+<p style="color:white">
+<textarea rows="3" cols="50" readonly>
+avr-gcc -mmcu=atmega328p led.c led.elf
+avr-objcopy -O ihex led.elf led.hex
+avrdude -c usbasp -p m328p -U flash:w:led.hex -vvv
+</textarea><br>
+</p>
+<p style="color:white">
+Finally I connected a led and a resistor from Vcc into a pin of the AVR.<br>
+</p>
+<p style="color:white">
+Thankfully the LED blinked, confirming things worked.<br>
+</p>
+</tr>
+</table>
