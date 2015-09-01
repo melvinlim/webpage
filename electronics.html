@@ -85,3 +85,7 @@ Tried to interface a USB keyboard through a USB->PS2 adapter to a PS2 port conne
 <p style="color:white">
 Finally got a 2.4" TFT Display working.  Kept having issues with the chip intermittently stopping communications with the display.  Seems the SS pin of the AVR is an input by default and floats, and when the pin goes low due to noise or whatever the AVR drops out of SPI master mode, ruining communications between AVR and TFT Display.  Finally fixed it after a google search and setting the SS pin to be an output.  Ended up porting a library from Adafruit for the Display and am glad I did, since it comes with a bunch of fonts and functions for drawing pictures quickly that would have taken me maybe a year to write myself.
 </p>
+<hr>
+<p style="color:white">
+Keyboard now working.  Had to use UART mode rather than SPI.  UART does check/removal of parity, start, and stop bits automatically in the internal hardware, much quicker than is possible in software.
+</p>
