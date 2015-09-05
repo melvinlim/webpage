@@ -27,11 +27,12 @@ foreach ($posts as $value){
 }
 */
 ?>
+<h4>July 2015</h4>
 <p style="color:white">
 I had some free time so I decided to learn how to use the AVR microcontrollers.
 </p>
 <p style="color:white">
-I purchased an atmega328p microcontroller.
+I purchased an atmega328p microcontroller and some other electronic stuff.
 </p>
 <p style="color:white">
 First I stripped a parallel port cable then I labelled every single wire through trial and error using inb outb commands on linux.
@@ -43,34 +44,70 @@ Eventually I connected the wires to the AVR and used the avrdude program to try 
 Anyway it failed.  So I gave up for a few weeks.
 </p>
 <hr>
+<h4>August 19, 2015</h4>
+<table>
+<td>
+<a href="img/parts_8_19.jpg"><img src="img/parts_8_19.png" alt="electronic parts image"></a>
+</td>
+<td valign="top">
+<p style="color:white">
+Received a bunch of electronic parts in the mail.
+</p>
+</td>
+</table>
+<table>
+<td>
+<a href="img/little_vmeter.jpg"><img src="img/little_vmeter.png" alt="voltmeter image"></a>
+</td>
+<td valign="top">
+<p style="color:white">
+Picture of the voltmeter.  Great product I think.  Found it on Ebay.<br>
+</p>
+</td>
+</table>
+<hr>
+<h4>August 21, 2015</h4><br>
+<table>
+<td>
+</td>
+<td valign="top">
+<p style="color:white">
+Purchased a usbasp programmer.  Tried to program an atmega328p chip but failed.<br>
+If you're wondering about the difference in voltages, atmega328p can run at 3.3 or 5 volts.  So that wasn't the issue.
+</p>
+</td>
+</table>
+<table>
+<td>
+</td>
+<td valign="top">
+<p style="color:white">
+Trying to program with Raspberry Pi minicomputer.  Raspberry PI has a bunch of pins that you can use to send output and someone wrote a guide how to do that also avrdude supports this only you have to edit the avrdude.conf file to specify the particular ports you are using.
+</p>
+</td>
+</table>
+<p style="color:white">
+Programming failed again.
+</p>
+<p style="color:white">
+Later realized a crystal oscillator might be needed since the AVR chip may have been modified to use a crystal oscillator for some reason.
+</p>
 <table>
 <td>
 <a href="img/usbasp_avr.jpg"><img src="img/usbasp_avr.png" alt="usbasp and avr image"></a>
 </td>
-<td valign="top">
-<p style="color:white">
-Later when I tried again I purchased a usbasp programmer.  I again hooked it up and tried to program it and failed.
-</p>
-</td>
-</table>
-<hr>
-<table>
 <td>
 <a href="img/rpi_avr.jpg"><img src="img/rpi_avr.png" alt="raspberry pi and avr image"></a>
 </td>
-<td valign="top">
-<p style="color:white">
-Next I remembered I had a Raspberry PI computer lying around.  Raspberry PI has a bunch of pins that you can use to send output and someone wrote a guide how to do that also avrdude supports this only you have to edit the avrdude.conf file to specify the particular ports you are using.
-</p>
-</td>
 </table>
 <p style="color:white">
-Anyway it didn't work but in the end I realized I needed a crystal since the AVR chip had been modified to use a crystal for some reason.
+Success!  Notice the leds are blinking/on.  The oscillator is the metal bread loaf shaped thing.
 </p>
 <p style="color:white">
-So the moral of the story is to connect a crystal to the AVR before programming it if you are doing this without an Arduino.
+So the moral of the story is to connect a crystal oscillator to the AVR before programming it if you are doing this without an Arduino because a lot of chips require the oscillator to function.  (Arduino board comes with the oscillator)
 </p>
 <hr>
+<h4>August 29, 2015</h4>
 <table>
 <td>
 <a href="img/ps2_lcd_avr.jpg"><img src="img/ps2_lcd_avr.png" alt="keyboard, lcd, and avr image"></a>
