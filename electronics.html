@@ -27,41 +27,22 @@ foreach ($posts as $value){
 }
 */
 ?>
-<h4 style="color:white">July 2015</h4>
 <p style="color:white">
-I had some free time so I decided to learn how to use the AVR microcontrollers.
-</p>
-<p style="color:white">
-I purchased an atmega328p microcontroller and some other electronic stuff.
-</p>
-<p style="color:white">
-First I stripped a parallel port cable then I labelled every single wire through trial and error using inb outb commands on linux.
-</p>
-<p style="color:white">
-Eventually I connected the wires to the AVR and used the avrdude program to try and program it.
-</p>
-<p style="color:white">
-Anyway it failed.  So I gave up for a few weeks.
+Keyboard now working reliably.  Had to use UART mode rather than SPI.  UART does check/removal of parity, start, and stop bits automatically in the internal hardware, much quicker than is possible in software.
 </p>
 <hr>
-<h4 style="color:white">August 19, 2015</h4>
-<table>
-<td>
-<a href="img/parts_8_19.jpg"><img src="img/parts_8_19.png" alt="electronic parts image"></a>
-</td>
-<td valign="top">
 <p style="color:white">
-Received a bunch of electronic parts in the mail.
+Got the 2.4" TFT Display working.  Kept having issues with the chip intermittently stopping communications with the display.  Seems the SS pin of the AVR is an input by default and floats, and when the pin goes low due to noise or whatever the AVR drops out of SPI master mode, ruining communications between AVR and TFT Display.  Finally fixed it after a google search and setting the SS pin to be an output.  Ended up porting a library from Adafruit for the Display and am glad I did, since it comes with a bunch of fonts and functions for drawing pictures quickly that would have taken me maybe a year to write myself.
 </p>
-</td>
-</table>
+<hr>
+<h4 style="color:white">August 29, 2015</h4>
 <table>
 <td>
-<a href="img/little_vmeter.jpg"><img src="img/little_vmeter.png" alt="voltmeter image"></a>
+<a href="img/ps2_lcd_avr.jpg"><img src="img/ps2_lcd_avr.png" alt="keyboard, lcd, and avr image"></a>
 </td>
 <td valign="top">
 <p style="color:white">
-Picture of the voltmeter.  Great product I think.  Found it on Ebay.<br>
+Tried to interface a USB keyboard through a USB->PS2 adapter to a PS2 port connected to the AVR and display output on an LCD (to make sure it's working).  It works but not reliably.  Will try to fix later.
 </p>
 </td>
 </table>
@@ -107,22 +88,41 @@ Success!  Notice the leds are blinking/on.  The oscillator is the metal bread lo
 So the moral of the story is to connect a crystal oscillator to the AVR before programming it if you are doing this without an Arduino because a lot of chips require the oscillator to function.  (Arduino board comes with the oscillator)
 </p>
 <hr>
-<h4 style="color:white">August 29, 2015</h4>
+<h4 style="color:white">August 19, 2015</h4>
 <table>
 <td>
-<a href="img/ps2_lcd_avr.jpg"><img src="img/ps2_lcd_avr.png" alt="keyboard, lcd, and avr image"></a>
+<a href="img/parts_8_19.jpg"><img src="img/parts_8_19.png" alt="electronic parts image"></a>
 </td>
 <td valign="top">
 <p style="color:white">
-Tried to interface a USB keyboard through a USB->PS2 adapter to a PS2 port connected to the AVR and display output on an LCD (to make sure it's working).  Unfortunately have failed.  Looks like it is working but it gets keypresses wrong and I have to hold down the key for half a second before it registers.
+Received a bunch of electronic parts in the mail.
+</p>
+</td>
+</table>
+<table>
+<td>
+<a href="img/little_vmeter.jpg"><img src="img/little_vmeter.png" alt="voltmeter image"></a>
+</td>
+<td valign="top">
+<p style="color:white">
+Picture of the voltmeter.  Great product I think.  Found it on Ebay.<br>
 </p>
 </td>
 </table>
 <hr>
+<h4 style="color:white">July 2015</h4>
 <p style="color:white">
-Finally got a 2.4" TFT Display working.  Kept having issues with the chip intermittently stopping communications with the display.  Seems the SS pin of the AVR is an input by default and floats, and when the pin goes low due to noise or whatever the AVR drops out of SPI master mode, ruining communications between AVR and TFT Display.  Finally fixed it after a google search and setting the SS pin to be an output.  Ended up porting a library from Adafruit for the Display and am glad I did, since it comes with a bunch of fonts and functions for drawing pictures quickly that would have taken me maybe a year to write myself.
+I had some free time so I decided to learn how to use the AVR microcontrollers.
 </p>
-<hr>
 <p style="color:white">
-Keyboard now working.  Had to use UART mode rather than SPI.  UART does check/removal of parity, start, and stop bits automatically in the internal hardware, much quicker than is possible in software.
+I purchased an atmega328p microcontroller and some other electronic stuff.
+</p>
+<p style="color:white">
+First I stripped a parallel port cable then I labelled every single wire through trial and error using inb outb commands on linux.
+</p>
+<p style="color:white">
+Eventually I connected the wires to the AVR and used the avrdude program to try and program it.
+</p>
+<p style="color:white">
+Unfortunately, programming has failed.  Will try again later.
 </p>
