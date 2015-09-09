@@ -23,8 +23,8 @@ var RED="#FF0000"
 var BLUE="#0000FF"
 var LIME="#00FF00"
 
-var INITIALHEIGHT=20;
-//var INITIALHEIGHT=NROWS-2;
+//var INITIALHEIGHT=20;
+var INITIALHEIGHT=NROWS-2;
 
 var otherBlocks={
 	height:INITIALHEIGHT,
@@ -63,6 +63,16 @@ function lineComplete(line){
 for(i=(otherBlocks.height+1);i<NROWS;i++){
 	for(j=0;j<NCOLS;j++){
 		otherBlocks.blocks[j+(i*NCOLS)]=1;
+	}
+}
+
+function undoTurn(direction){
+	if(direction>0){
+		fallingBlock.state--;
+		if(fallingBlock.state<0)	fallingBlock.state=3;
+	}else{
+		fallingBlock.state++;
+		if(fallingBlock.state>3)	fallingBlock.state=0;
 	}
 }
 
@@ -232,8 +242,7 @@ var fallingBlock={
 				fallingBlock.blocks[j+(i*NCOLS)]=0;
 			}
 		}
-		//z=Math.floor((Math.random()*7));
-		z=2+Math.floor((Math.random()*3));
+		z=Math.floor((Math.random()*7));
 		switch(z){
 			case 0:
 				fallingBlock.newB0();
@@ -282,272 +291,28 @@ var fallingBlock={
 			}
 		}
 	},
-	rotateCCW:function(){
-		fallingBlock.state--;
-		if(fallingBlock.state<0)	fallingBlock.state=3;
-		switch(fallingBlock.type){
-			case 0:	//I
-				switch(fallingBlock.state){
-					case 0:
-					case 2:
-						if(fallingBlock.pivot<2||fallingBlock.pivot>(NCOLS-2)){
-							fallingBlock.state++;
-							if(fallingBlock.state>3)	fallingBlock.state=0;
-							return;
-						}
-						fallingBlock.clearBlock();
-						fallingBlock.bottomRow=fallingBlock.topRow;
-						for(j=(fallingBlock.pivot-2);j<(fallingBlock.pivot+2);j++){
-							fallingBlock.blocks[j+(fallingBlock.topRow*NCOLS)]=1;
-						}
-					break;
-					case 1:
-					case 3:
-						fallingBlock.clearBlock();
-						fallingBlock.bottomRow=fallingBlock.topRow+3;
-						j=fallingBlock.pivot;
-						for(i=fallingBlock.topRow;i<=fallingBlock.bottomRow;i++){
-							fallingBlock.blocks[j+(i*NCOLS)]=1;
-						}
-					break;
-					default:
-				}
-			break;
-			case 1:	//box
-			break;
-			case 2:	//7
-				switch(fallingBlock.state){
-					case 0:
-						if(fallingBlock.pivot<1||fallingBlock.pivot>(NCOLS-2)){
-							fallingBlock.state++;
-							if(fallingBlock.state>3)	fallingBlock.state=0;
-							return;
-						}
-						fallingBlock.clearBlock();
-						fallingBlock.bottomRow=fallingBlock.topRow+1;
-						for(j=(fallingBlock.pivot-1);j<(fallingBlock.pivot+2);j++){
-							fallingBlock.blocks[j+(fallingBlock.topRow*NCOLS)]=1;
-						}
-						fallingBlock.blocks[fallingBlock.pivot-1+(fallingBlock.bottomRow*NCOLS)]=1;
-					break;
-					case 1:
-						fallingBlock.clearBlock();
-						fallingBlock.bottomRow=fallingBlock.topRow+2;
-						for(j=(fallingBlock.pivot-1);j<(fallingBlock.pivot+1);j++){
-							fallingBlock.blocks[j+(fallingBlock.topRow*NCOLS)]=1;
-						}
-						j=(fallingBlock.pivot);
-						for(i=(fallingBlock.topRow+1);i<=(fallingBlock.bottomRow);i++){
-							fallingBlock.blocks[j+(i*NCOLS)]=1;
-						}
-					break;
-					case 2:
-						if(fallingBlock.pivot<1||fallingBlock.pivot>(NCOLS-2)){
-							fallingBlock.state++;
-							if(fallingBlock.state>3)	fallingBlock.state=0;
-							return;
-						}
-						fallingBlock.clearBlock();
-						fallingBlock.bottomRow=fallingBlock.topRow+1;
-						for(j=(fallingBlock.pivot-1);j<(fallingBlock.pivot+2);j++){
-							fallingBlock.blocks[j+(fallingBlock.bottomRow*NCOLS)]=1;
-						}
-						fallingBlock.blocks[fallingBlock.pivot+1+(fallingBlock.topRow*NCOLS)]=1;
-					break;
-					case 3:
-						fallingBlock.clearBlock();
-						fallingBlock.bottomRow=fallingBlock.topRow+2;
-						j=(fallingBlock.pivot);
-						for(i=(fallingBlock.topRow);i<=(fallingBlock.bottomRow);i++){
-							fallingBlock.blocks[j+(i*NCOLS)]=1;
-						}
-						fallingBlock.blocks[fallingBlock.pivot+1+(fallingBlock.bottomRow*NCOLS)]=1;
-					break;
-					default:
-				}
-			break;
-			case 3:	//T
-				switch(fallingBlock.state){
-					case 0:
-						if(fallingBlock.pivot<1||fallingBlock.pivot>(NCOLS-2)){
-							fallingBlock.state++;
-							if(fallingBlock.state>3)	fallingBlock.state=0;
-							return;
-						}
-						fallingBlock.clearBlock();
-						fallingBlock.bottomRow=fallingBlock.topRow+1;
-						fallingBlock.blocks[fallingBlock.pivot+(fallingBlock.topRow*NCOLS)]=1;
-						for(j=(fallingBlock.pivot-1);j<(fallingBlock.pivot+2);j++){
-							fallingBlock.blocks[j+(fallingBlock.bottomRow*NCOLS)]=1;
-						}
-					break;
-					case 1:
-						fallingBlock.clearBlock();
-						fallingBlock.bottomRow=fallingBlock.topRow+2;
-						fallingBlock.blocks[((fallingBlock.topRow+1)*NCOLS)+fallingBlock.pivot+1]=1;
-						j=(fallingBlock.pivot);
-						for(i=(fallingBlock.topRow);i<=(fallingBlock.bottomRow);i++){
-							fallingBlock.blocks[j+(i*NCOLS)]=1;
-						}
-					break;
-					case 2:
-						if(fallingBlock.pivot<1||fallingBlock.pivot>(NCOLS-2)){
-							fallingBlock.state++;
-							if(fallingBlock.state>3)	fallingBlock.state=0;
-							return;
-						}
-						fallingBlock.clearBlock();
-						fallingBlock.bottomRow=fallingBlock.topRow+1;
-						for(j=(fallingBlock.pivot-1);j<(fallingBlock.pivot+2);j++){
-							fallingBlock.blocks[j+(fallingBlock.topRow*NCOLS)]=1;
-						}
-						fallingBlock.blocks[fallingBlock.pivot+(fallingBlock.bottomRow*NCOLS)]=1;
-					break;
-					case 3:
-						fallingBlock.clearBlock();
-						fallingBlock.bottomRow=fallingBlock.topRow+2;
-						fallingBlock.blocks[((fallingBlock.topRow+1)*NCOLS)+fallingBlock.pivot-1]=1;
-						j=(fallingBlock.pivot);
-						for(i=(fallingBlock.topRow);i<=(fallingBlock.bottomRow);i++){
-							fallingBlock.blocks[j+(i*NCOLS)]=1;
-						}
-					break;
-				}
-			break;
-			case 4:	//L
-				switch(fallingBlock.state){
-					case 0:
-						if(fallingBlock.pivot<1||fallingBlock.pivot>(NCOLS-2)){
-							fallingBlock.state++;
-							if(fallingBlock.state>3)	fallingBlock.state=0;
-							return;
-						}
-						fallingBlock.clearBlock();
-						fallingBlock.bottomRow=fallingBlock.topRow+1;
-						for(j=(fallingBlock.pivot-1);j<(fallingBlock.pivot+2);j++){
-							fallingBlock.blocks[j+(fallingBlock.topRow*NCOLS)]=1;
-						}
-						fallingBlock.blocks[fallingBlock.pivot+1+(fallingBlock.bottomRow*NCOLS)]=1;
-					break;
-					case 1:
-						fallingBlock.clearBlock();
-						fallingBlock.bottomRow=fallingBlock.topRow+2;
-						for(j=(fallingBlock.pivot-1);j<(fallingBlock.pivot+1);j++){
-							fallingBlock.blocks[j+(fallingBlock.bottomRow*NCOLS)]=1;
-						}
-						j=(fallingBlock.pivot);
-						for(i=(fallingBlock.topRow);i<=(fallingBlock.topRow+1);i++){
-							fallingBlock.blocks[j+(i*NCOLS)]=1;
-						}
-					break;
-					case 2:
-						if(fallingBlock.pivot<1||fallingBlock.pivot>(NCOLS-2)){
-							fallingBlock.state++;
-							if(fallingBlock.state>3)	fallingBlock.state=0;
-							return;
-						}
-						fallingBlock.clearBlock();
-						fallingBlock.bottomRow=fallingBlock.topRow+1;
-						for(j=(fallingBlock.pivot-1);j<(fallingBlock.pivot+2);j++){
-							fallingBlock.blocks[j+(fallingBlock.bottomRow*NCOLS)]=1;
-						}
-						fallingBlock.blocks[fallingBlock.pivot-1+(fallingBlock.topRow*NCOLS)]=1;
-					break;
-					case 3:
-						fallingBlock.clearBlock();
-						fallingBlock.bottomRow=fallingBlock.topRow+2;
-						j=(fallingBlock.pivot);
-						for(i=(fallingBlock.topRow);i<=(fallingBlock.bottomRow);i++){
-							fallingBlock.blocks[j+(i*NCOLS)]=1;
-						}
-						fallingBlock.blocks[fallingBlock.pivot+1+(fallingBlock.topRow*NCOLS)]=1;
-					break;
-					default:
-				}
-			break;
-			case 5:	//Z
-				switch(fallingBlock.state){
-					case 0:
-					case 2:
-						if(fallingBlock.pivot<1||fallingBlock.pivot>(NCOLS-2)){
-							fallingBlock.state++;
-							if(fallingBlock.state>3)	fallingBlock.state=0;
-							return;
-						}
-						fallingBlock.clearBlock();
-						fallingBlock.bottomRow=fallingBlock.topRow+1;
-						for(j=(fallingBlock.pivot-1);j<(fallingBlock.pivot+1);j++){
-							fallingBlock.blocks[j+(fallingBlock.topRow*NCOLS)]=1;
-						}
-						for(j=(fallingBlock.pivot);j<(fallingBlock.pivot+2);j++){
-							fallingBlock.blocks[j+(fallingBlock.bottomRow*NCOLS)]=1;
-						}
-					break;
-					case 1:
-					case 3:
-						fallingBlock.clearBlock();
-						fallingBlock.bottomRow=fallingBlock.topRow+2;
-						j=fallingBlock.pivot+1;
-						for(i=(fallingBlock.topRow);i<(fallingBlock.bottomRow);i++){
-							fallingBlock.blocks[j+(i*NCOLS)]=1;
-						}
-						j=fallingBlock.pivot;
-						for(i=(fallingBlock.topRow+1);i<=(fallingBlock.bottomRow);i++){
-							fallingBlock.blocks[j+(i*NCOLS)]=1;
-						}
-					break;
-					default:
-				}
-			break;
-			case 6:	//S
-				switch(fallingBlock.state){
-					case 0:
-					case 2:
-						if(fallingBlock.pivot<1||fallingBlock.pivot>(NCOLS-2)){
-							fallingBlock.state++;
-							if(fallingBlock.state>3)	fallingBlock.state=0;
-							return;
-						}
-						fallingBlock.clearBlock();
-						fallingBlock.bottomRow=fallingBlock.topRow+1;
-						for(j=(fallingBlock.pivot-1);j<(fallingBlock.pivot+1);j++){
-							fallingBlock.blocks[j+(fallingBlock.bottomRow*NCOLS)]=1;
-						}
-						for(j=(fallingBlock.pivot);j<(fallingBlock.pivot+2);j++){
-							fallingBlock.blocks[j+(fallingBlock.topRow*NCOLS)]=1;
-						}
-					break;
-					case 1:
-					case 3:
-						fallingBlock.clearBlock();
-						fallingBlock.bottomRow=fallingBlock.topRow+2;
-						j=fallingBlock.pivot;
-						for(i=(fallingBlock.topRow);i<(fallingBlock.bottomRow);i++){
-							fallingBlock.blocks[j+(i*NCOLS)]=1;
-						}
-						j=fallingBlock.pivot+1;
-						for(i=(fallingBlock.topRow+1);i<=(fallingBlock.bottomRow);i++){
-							fallingBlock.blocks[j+(i*NCOLS)]=1;
-						}
-					break;
-					default:
-				}
-			break;
-			default:
+	rotate:function(direction){
+		if(direction>0){
+			fallingBlock.state++;
+			if(fallingBlock.state>3)	fallingBlock.state=0;
+		}else{
+			fallingBlock.state--;
+			if(fallingBlock.state<0)	fallingBlock.state=3;
 		}
-	},
-	rotateCW:function(){
-		fallingBlock.state++;
-		if(fallingBlock.state>3)	fallingBlock.state=0;
 		switch(fallingBlock.type){
 			case 0:	//I
 				switch(fallingBlock.state){
 					case 0:
 					case 2:
 						if(fallingBlock.pivot<2||fallingBlock.pivot>(NCOLS-2)){
-							fallingBlock.state--;
-							if(fallingBlock.state<0)	fallingBlock.state=3;
+							undoTurn(direction);
 							return;
+						}
+						for(j=(fallingBlock.pivot-2);j<(fallingBlock.pivot+2);j++){
+							if(otherBlocks.blocks[j+(fallingBlock.topRow*NCOLS)]>0){
+								undoTurn(direction);
+								return;
+							}
 						}
 						fallingBlock.clearBlock();
 						fallingBlock.bottomRow=fallingBlock.topRow;
@@ -557,6 +322,13 @@ var fallingBlock={
 					break;
 					case 1:
 					case 3:
+						j=fallingBlock.pivot;
+						for(i=fallingBlock.topRow;i<=(fallingBlock.topRow+3);i++){
+							if(otherBlocks.blocks[j+(i*NCOLS)]>0){
+								undoTurn(direction);
+								return;
+							}
+						}
 						fallingBlock.clearBlock();
 						fallingBlock.bottomRow=fallingBlock.topRow+3;
 						j=fallingBlock.pivot;
@@ -573,8 +345,24 @@ var fallingBlock={
 				switch(fallingBlock.state){
 					case 0:
 						if(fallingBlock.pivot<1||fallingBlock.pivot>(NCOLS-2)){
-							fallingBlock.state--;
-							if(fallingBlock.state<0)	fallingBlock.state=3;
+							if(direction>0){
+								fallingBlock.state--;
+								if(fallingBlock.state<0)	fallingBlock.state=3;
+								return;
+							}else{
+								fallingBlock.state++;
+								if(fallingBlock.state>3)	fallingBlock.state=0;
+								return;
+							}
+						}
+						for(j=(fallingBlock.pivot-1);j<(fallingBlock.pivot+2);j++){
+							if(otherBlocks.blocks[j+(fallingBlock.topRow*NCOLS)]>0){
+								undoTurn(direction);
+								return;
+							}
+						}
+						if(otherBlocks.blocks[fallingBlock.pivot-1+((fallingBlock.topRow+1)*NCOLS)]>0){
+							undoTurn(direction);
 							return;
 						}
 						fallingBlock.clearBlock();
@@ -585,6 +373,19 @@ var fallingBlock={
 						fallingBlock.blocks[fallingBlock.pivot-1+(fallingBlock.bottomRow*NCOLS)]=1;
 					break;
 					case 1:
+						for(j=(fallingBlock.pivot-1);j<(fallingBlock.pivot+1);j++){
+							if(otherBlocks.blocks[j+(fallingBlock.topRow*NCOLS)]>0){
+								undoTurn(direction);
+								return;
+							}
+						}
+						j=(fallingBlock.pivot);
+						for(i=(fallingBlock.topRow+1);i<=((fallingBlock.topRow+2));i++){
+							if(otherBlocks.blocks[j+(i*NCOLS)]>0){
+								undoTurn(direction);
+								return;
+							}
+						}
 						fallingBlock.clearBlock();
 						fallingBlock.bottomRow=fallingBlock.topRow+2;
 						for(j=(fallingBlock.pivot-1);j<(fallingBlock.pivot+1);j++){
@@ -597,8 +398,24 @@ var fallingBlock={
 					break;
 					case 2:
 						if(fallingBlock.pivot<1||fallingBlock.pivot>(NCOLS-2)){
-							fallingBlock.state--;
-							if(fallingBlock.state<0)	fallingBlock.state=3;
+							if(direction>0){
+								fallingBlock.state--;
+								if(fallingBlock.state<0)	fallingBlock.state=3;
+								return;
+							}else{
+								fallingBlock.state++;
+								if(fallingBlock.state>3)	fallingBlock.state=0;
+								return;
+							}
+						}
+						for(j=(fallingBlock.pivot-1);j<(fallingBlock.pivot+2);j++){
+							if(otherBlocks.blocks[j+((fallingBlock.topRow+1)*NCOLS)]>0){
+								undoTurn(direction);
+								return;
+							}
+						}
+						if(otherBlocks.blocks[fallingBlock.pivot+1+(fallingBlock.topRow*NCOLS)]>0){
+							undoTurn(direction);
 							return;
 						}
 						fallingBlock.clearBlock();
@@ -609,6 +426,17 @@ var fallingBlock={
 						fallingBlock.blocks[fallingBlock.pivot+1+(fallingBlock.topRow*NCOLS)]=1;
 					break;
 					case 3:
+						j=(fallingBlock.pivot);
+						for(i=(fallingBlock.topRow);i<=((fallingBlock.topRow+2));i++){
+							if(otherBlocks.blocks[j+(i*NCOLS)]>0){
+								undoTurn(direction);
+								return;
+							}
+						}
+						if(otherBlocks.blocks[fallingBlock.pivot+1+((fallingBlock.topRow+2)*NCOLS)]>0){
+							undoTurn(direction);
+							return;
+						}
 						fallingBlock.clearBlock();
 						fallingBlock.bottomRow=fallingBlock.topRow+2;
 						j=(fallingBlock.pivot);
@@ -624,9 +452,25 @@ var fallingBlock={
 				switch(fallingBlock.state){
 					case 0:
 						if(fallingBlock.pivot<1||fallingBlock.pivot>(NCOLS-2)){
-							fallingBlock.state--;
-							if(fallingBlock.state<0)	fallingBlock.state=3;
+							if(direction>0){
+								fallingBlock.state--;
+								if(fallingBlock.state<0)	fallingBlock.state=3;
+								return;
+							}else{
+								fallingBlock.state++;
+								if(fallingBlock.state>3)	fallingBlock.state=0;
+								return;
+							}
+						}
+						if(otherBlocks.blocks[fallingBlock.pivot+(fallingBlock.topRow*NCOLS)]>0){
+							undoTurn(direction);
 							return;
+						}
+						for(j=(fallingBlock.pivot-1);j<(fallingBlock.pivot+2);j++){
+							if(otherBlocks.blocks[j+((fallingBlock.topRow+1)*NCOLS)]>0){
+								undoTurn(direction);
+								return;
+							}
 						}
 						fallingBlock.clearBlock();
 						fallingBlock.bottomRow=fallingBlock.topRow+1;
@@ -636,6 +480,28 @@ var fallingBlock={
 						}
 					break;
 					case 1:
+						if(otherBlocks.blocks[((fallingBlock.topRow+1)*NCOLS)+fallingBlock.pivot+1]>0){
+							undoTurn(direction);
+							return;
+						}
+						j=(fallingBlock.pivot);
+						for(i=(fallingBlock.topRow);i<=(fallingBlock.topRow+2);i++){
+							if(otherBlocks.blocks[j+(i*NCOLS)]>0){
+								undoTurn(direction);
+								return;
+							}
+						}
+						if(otherBlocks.blocks[((fallingBlock.topRow+1)*NCOLS)+fallingBlock.pivot+1]>0){
+							undoTurn(direction);
+							return;
+						}
+						j=(fallingBlock.pivot);
+						for(i=(fallingBlock.topRow);i<=(fallingBlock.topRow+2);i++){
+							if(otherBlocks.blocks[j+(i*NCOLS)]>0){
+								undoTurn(direction);
+								return;
+							}
+						}
 						fallingBlock.clearBlock();
 						fallingBlock.bottomRow=fallingBlock.topRow+2;
 						fallingBlock.blocks[((fallingBlock.topRow+1)*NCOLS)+fallingBlock.pivot+1]=1;
@@ -646,8 +512,24 @@ var fallingBlock={
 					break;
 					case 2:
 						if(fallingBlock.pivot<1||fallingBlock.pivot>(NCOLS-2)){
-							fallingBlock.state--;
-							if(fallingBlock.state<0)	fallingBlock.state=3;
+							if(direction>0){
+								fallingBlock.state--;
+								if(fallingBlock.state<0)	fallingBlock.state=3;
+								return;
+							}else{
+								fallingBlock.state++;
+								if(fallingBlock.state>3)	fallingBlock.state=0;
+								return;
+							}
+						}
+						for(j=(fallingBlock.pivot-1);j<(fallingBlock.pivot+2);j++){
+							if(otherBlocks.blocks[j+(fallingBlock.topRow*NCOLS)]>0){
+								undoTurn(direction);
+								return;
+							}
+						}
+						if(otherBlocks.blocks[fallingBlock.pivot+((fallingBlock.topRow+1)*NCOLS)]>0){
+							undoTurn(direction);
 							return;
 						}
 						fallingBlock.clearBlock();
@@ -658,6 +540,17 @@ var fallingBlock={
 						fallingBlock.blocks[fallingBlock.pivot+(fallingBlock.bottomRow*NCOLS)]=1;
 					break;
 					case 3:
+						if(otherBlocks.blocks[((fallingBlock.topRow+1)*NCOLS)+fallingBlock.pivot-1]>0){
+							undoTurn(direction);
+							return;
+						}
+						j=(fallingBlock.pivot);
+						for(i=(fallingBlock.topRow);i<=(fallingBlock.topRow+2);i++){
+							if(otherBlocks.blocks[j+(i*NCOLS)]>0){
+								undoTurn(direction);
+								return;
+							}
+						}
 						fallingBlock.clearBlock();
 						fallingBlock.bottomRow=fallingBlock.topRow+2;
 						fallingBlock.blocks[((fallingBlock.topRow+1)*NCOLS)+fallingBlock.pivot-1]=1;
@@ -672,8 +565,24 @@ var fallingBlock={
 				switch(fallingBlock.state){
 					case 0:
 						if(fallingBlock.pivot<1||fallingBlock.pivot>(NCOLS-2)){
-							fallingBlock.state--;
-							if(fallingBlock.state<0)	fallingBlock.state=3;
+							if(direction>0){
+								fallingBlock.state--;
+								if(fallingBlock.state<0)	fallingBlock.state=3;
+								return;
+							}else{
+								fallingBlock.state++;
+								if(fallingBlock.state>3)	fallingBlock.state=0;
+								return;
+							}
+						}
+						for(j=(fallingBlock.pivot-1);j<(fallingBlock.pivot+2);j++){
+							if(otherBlocks.blocks[j+(fallingBlock.topRow*NCOLS)]>0){
+								undoTurn(direction);
+								return;
+							}
+						}
+						if(otherBlocks.blocks[fallingBlock.pivot+1+((fallingBlock.topRow+1)*NCOLS)]>0){
+							undoTurn(direction);
 							return;
 						}
 						fallingBlock.clearBlock();
@@ -684,6 +593,19 @@ var fallingBlock={
 						fallingBlock.blocks[fallingBlock.pivot+1+(fallingBlock.bottomRow*NCOLS)]=1;
 					break;
 					case 1:
+						for(j=(fallingBlock.pivot-1);j<(fallingBlock.pivot+1);j++){
+							if(otherBlocks.blocks[j+((fallingBlock.topRow+2)*NCOLS)]>0){
+								undoTurn(direction);
+								return;
+							}
+						}
+						j=(fallingBlock.pivot);
+						for(i=(fallingBlock.topRow);i<=((fallingBlock.topRow+1));i++){
+							if(otherBlocks.blocks[j+(i*NCOLS)]>0){
+								undoTurn(direction);
+								return;
+							}
+						}
 						fallingBlock.clearBlock();
 						fallingBlock.bottomRow=fallingBlock.topRow+2;
 						for(j=(fallingBlock.pivot-1);j<(fallingBlock.pivot+1);j++){
@@ -696,8 +618,24 @@ var fallingBlock={
 					break;
 					case 2:
 						if(fallingBlock.pivot<1||fallingBlock.pivot>(NCOLS-2)){
-							fallingBlock.state--;
-							if(fallingBlock.state<0)	fallingBlock.state=3;
+							if(direction>0){
+								fallingBlock.state--;
+								if(fallingBlock.state<0)	fallingBlock.state=3;
+								return;
+							}else{
+								fallingBlock.state++;
+								if(fallingBlock.state>3)	fallingBlock.state=0;
+								return;
+							}
+						}
+						for(j=(fallingBlock.pivot-1);j<(fallingBlock.pivot+2);j++){
+							if(otherBlocks.blocks[j+((fallingBlock.topRow+1)*NCOLS)]>0){
+								undoTurn(direction);
+								return;
+							}
+						}
+						if(otherBlocks.blocks[fallingBlock.pivot-1+(fallingBlock.topRow*NCOLS)]>0){
+							undoTurn(direction);
 							return;
 						}
 						fallingBlock.clearBlock();
@@ -708,6 +646,17 @@ var fallingBlock={
 						fallingBlock.blocks[fallingBlock.pivot-1+(fallingBlock.topRow*NCOLS)]=1;
 					break;
 					case 3:
+						j=(fallingBlock.pivot);
+						for(i=(fallingBlock.topRow);i<=((fallingBlock.topRow+2));i++){
+							if(otherBlocks.blocks[j+(i*NCOLS)]>0){
+								undoTurn(direction);
+								return;
+							}
+						}
+						if(otherBlocks.blocks[fallingBlock.pivot+1+((fallingBlock.topRow)*NCOLS)]>0){
+							undoTurn(direction);
+							return;
+						}
 						fallingBlock.clearBlock();
 						fallingBlock.bottomRow=fallingBlock.topRow+2;
 						j=(fallingBlock.pivot);
@@ -724,9 +673,27 @@ var fallingBlock={
 					case 0:
 					case 2:
 						if(fallingBlock.pivot<1||fallingBlock.pivot>(NCOLS-2)){
-							fallingBlock.state--;
-							if(fallingBlock.state<0)	fallingBlock.state=3;
-							return;
+							if(direction>0){
+								fallingBlock.state--;
+								if(fallingBlock.state<0)	fallingBlock.state=3;
+								return;
+							}else{
+								fallingBlock.state++;
+								if(fallingBlock.state>3)	fallingBlock.state=0;
+								return;
+							}
+						}
+						for(j=(fallingBlock.pivot-1);j<(fallingBlock.pivot+1);j++){
+							if(otherBlocks.blocks[j+(fallingBlock.topRow*NCOLS)]>0){
+								undoTurn(direction);
+								return;
+							}
+						}
+						for(j=(fallingBlock.pivot);j<(fallingBlock.pivot+2);j++){
+							if(otherBlocks.blocks[j+((fallingBlock.topRow+1)*NCOLS)]){
+								undoTurn(direction);
+								return;
+							}
 						}
 						fallingBlock.clearBlock();
 						fallingBlock.bottomRow=fallingBlock.topRow+1;
@@ -739,6 +706,20 @@ var fallingBlock={
 					break;
 					case 1:
 					case 3:
+						j=fallingBlock.pivot+1;
+						for(i=(fallingBlock.topRow);i<(fallingBlock.topRow+2);i++){
+							if(otherBlocks.blocks[j+(i*NCOLS)]>0){
+								undoTurn(direction);
+								return;
+							}
+						}
+						j=fallingBlock.pivot;
+						for(i=(fallingBlock.topRow+1);i<=(fallingBlock.topRow+2);i++){
+							if(otherBlocks.blocks[j+(i*NCOLS)]>0){
+								undoTurn(direction);
+								return;
+							}
+						}
 						fallingBlock.clearBlock();
 						fallingBlock.bottomRow=fallingBlock.topRow+2;
 						j=fallingBlock.pivot+1;
@@ -758,9 +739,27 @@ var fallingBlock={
 					case 0:
 					case 2:
 						if(fallingBlock.pivot<1||fallingBlock.pivot>(NCOLS-2)){
-							fallingBlock.state--;
-							if(fallingBlock.state<0)	fallingBlock.state=3;
-							return;
+							if(direction>0){
+								fallingBlock.state--;
+								if(fallingBlock.state<0)	fallingBlock.state=3;
+								return;
+							}else{
+								fallingBlock.state++;
+								if(fallingBlock.state>3)	fallingBlock.state=0;
+								return;
+							}
+						}
+						for(j=(fallingBlock.pivot-1);j<(fallingBlock.pivot+1);j++){
+							if(otherBlocks.blocks[j+((fallingBlock.topRow+1)*NCOLS)]>0){
+								undoTurn(direction);
+								return;
+							}
+						}
+						for(j=(fallingBlock.pivot);j<(fallingBlock.pivot+2);j++){
+							if(otherBlocks.blocks[j+(fallingBlock.topRow*NCOLS)]>0){
+								undoTurn(direction);
+								return;
+							}
 						}
 						fallingBlock.clearBlock();
 						fallingBlock.bottomRow=fallingBlock.topRow+1;
@@ -773,6 +772,20 @@ var fallingBlock={
 					break;
 					case 1:
 					case 3:
+						j=fallingBlock.pivot;
+						for(i=(fallingBlock.topRow);i<(fallingBlock.topRow+2);i++){
+							if(otherBlocks.blocks[j+(i*NCOLS)]>0){
+								undoTurn(direction);
+								return;
+							}
+						}
+						j=fallingBlock.pivot+1;
+						for(i=(fallingBlock.topRow+1);i<=(fallingBlock.topRow+2);i++){
+							if(otherBlocks.blocks[j+(i*NCOLS)]>0){
+								undoTurn(direction);
+								return;
+							}
+						}
 						fallingBlock.clearBlock();
 						fallingBlock.bottomRow=fallingBlock.topRow+2;
 						j=fallingBlock.pivot;
@@ -818,6 +831,19 @@ var fallingBlock={
 fallingBlock.newBlock();
 var canvas=document.getElementById("myCanvas");
 var cv=canvas.getContext("2d");
+
+function checkCollision(){
+	for(i=fallingBlock.topRow;i<=fallingBlock.bottomRow;i++){
+		for(j=0;j<NCOLS;j++){
+			if(fallingBlock.blocks[j+((i)*NCOLS)]>0){
+				if(otherBlocks.blocks[j+((i)*NCOLS)]>0){
+					return 1;
+				}
+			}
+		}
+	}
+	return 0;
+}
 
 function randomColor(){
 	z=Math.floor((Math.random()*3));
@@ -904,7 +930,7 @@ document.onkeydown=function(event){
 			fallingBlock.moveLeft();
 		break;
 		case 38:	//up key
-			fallingBlock.rotateCCW();
+			fallingBlock.rotate(0);
 		break;
 		case 39:
 			fallingBlock.moveRight();
@@ -914,11 +940,11 @@ document.onkeydown=function(event){
 		break;
 		case 90:
 		case 122:		//z key
-			fallingBlock.rotateCCW();
+			fallingBlock.rotate(0);
 		break;
 		case 88:
 		case 120:		//x key
-			fallingBlock.rotateCW();
+			fallingBlock.rotate(1);
 		break;
 		default:
 	}
