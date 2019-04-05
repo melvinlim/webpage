@@ -1,5 +1,3 @@
-application: melvinlim-1048
-version: 1
 runtime: php55
 api_version: 1
 threadsafe: yes
