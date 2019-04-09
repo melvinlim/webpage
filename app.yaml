@@ -6,18 +6,44 @@ handlers:
 - url: /favicon\.ico
   static_files: favicon.ico
   upload: favicon\.ico
+
+- url: /robots.txt
+  static_files: robots.txt
+  upload: robots.txt
+
 - url: /
   script: index.php
+  secure: always
+
 - url: /index\.html
   script: index.php
+  secure: always
+
 - url: /index\.php
   script: index.php
+  secure: always
+
 - url: /(.*\.php)
   script: \1
+  secure: always
+
 - url: /img
   static_dir: img
+  secure: always
+
+- url: /juliaset.js
+  static_files: juliaset.js
+  upload: juliaset.js
+
+- url: /juliaset.wasm
+  static_files: juliaset.wasm
+  upload: juliaset.wasm
+
 - url: /js
   static_dir: js
+  secure: always
+
 - url: /(.*\.html)
   static_files: static/\1
   upload: static/(.*\.html)
+  secure: always
