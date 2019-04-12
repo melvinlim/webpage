@@ -35,9 +35,25 @@ handlers:
   static_files: juliaset.js
   upload: juliaset.js
 
+- url: /juliaset_shell.js
+  static_files: juliaset_shell.js
+  upload: juliaset_shell.js
+
 - url: /juliaset.wasm
   static_files: juliaset.wasm
   upload: juliaset.wasm
+
+- url: /glcube.js
+  static_files: glcube.js
+  upload: glcube.js
+
+- url: /glcube_shell.js
+  static_files: glcube_shell.js
+  upload: glcube_shell.js
+
+- url: /glcube.wasm
+  static_files: glcube.wasm
+  upload: glcube.wasm
 
 - url: /js
   static_dir: js
